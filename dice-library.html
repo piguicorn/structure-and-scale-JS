@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Dice Library</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style type="text/css">
+			body {
+				margin: 0 auto;
+				max-width: 40em;
+				width: 88%;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h1>Dice Library</h1>
+
+		<p>All of the magic here happens in the console.</p>
+
+
+		<script>
+			/**
+			 * Randomly shuffle an array
+			 * https://stackoverflow.com/a/2450976/1293256
+			 * @param  {Array} array The array to shuffle
+			 * @return {Array}       The shuffled array
+			 */
+			function shuffle (array) {
+
+				let currentIndex = array.length;
+				let temporaryValue, randomIndex;
+
+				// While there remain elements to shuffle...
+				while (0 !== currentIndex) {
+					// Pick a remaining element...
+					randomIndex = Math.floor(Math.random() * currentIndex);
+					currentIndex -= 1;
+
+					// And swap it with the current element.
+					temporaryValue = array[currentIndex];
+					array[currentIndex] = array[randomIndex];
+					array[randomIndex] = temporaryValue;
+				}
+
+				return array;
+
+			}
+
+            let roll = (function() {
+                /**
+                 * Generate an array with the sides in a dice.
+                 * @param {Number} int Number of sides.
+                 * @return {Array} nums Sides of the dice.
+                */
+                function numOfSides(num) {
+                    let result = [];
+
+                    if (num > 0 && Number.isInteger(num)) {
+                        for (let i = 1; i <= num; i++) {
+                            result.push(i);
+                        }
+                    }
+
+                    return result;
+                }
+
+                /**
+                 * Rolls a 2 sided dice.
+                 * @return {Array} nums Sides of the dice.
+                */
+                function d2() {
+                    let sidesArr = numOfSides(2);
+                    shuffle(sidesArr);
+                    return sidesArr[0];
+                }
+
+                function d4() {
+                    let sidesArr = numOfSides(4);
+                    shuffle(sidesArr);
+                    return sidesArr[0];
+                }
+
+                function d6() {
+                    let sidesArr = numOfSides(6);
+                    shuffle(sidesArr);
+                    return sidesArr[0];
+                }
+
+                function d8() {
+                    let sidesArr = numOfSides(8);
+                    shuffle(sidesArr);
+                    return sidesArr[0];
+                }
+
+                function d10() {
+                    let sidesArr = numOfSides(10);
+                    shuffle(sidesArr);
+                    return sidesArr[0];
+                }
+
+                function d12() {
+                    let sidesArr = numOfSides(12);
+                    shuffle(sidesArr);
+                    return sidesArr[0];
+                }
+
+                function d20() {
+                    let sidesArr = numOfSides(20);
+                    shuffle(sidesArr);
+                    return sidesArr[0];
+                }
+
+                return {d2, d4, d6, d8, d10, d12, d20};
+            })();
+
+
+		</script>
+	</body>
+</html>
