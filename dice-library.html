@@ -54,11 +54,11 @@
                  * @param {Number} int Number of sides.
                  * @return {Array} nums Sides of the dice.
                 */
-                function numOfSides(num) {
+                function numOfSides(sides) {
                     let result = [];
 
-                    if (num > 0 && Number.isInteger(num)) {
-                        for (let i = 1; i <= num; i++) {
+                    if (sides > 0 && Number.isInteger(sides)) {
+                        for (let i = 1; i <= sides; i++) {
                             result.push(i);
                         }
                     }
@@ -67,50 +67,65 @@
                 }
 
                 /**
-                 * Rolls a 2 sided dice.
-                 * @return {Array} nums Sides of the dice.
+                 * Roll a dice with the given number of sides.
+                 * @param {Number} int Number of sides.
+                 * @return {Number} winner.
+                */
+                function rollDice(sides) {
+                    let sidesArr = numOfSides(sides);
+                    shuffle(sidesArr);
+                    return sidesArr[0];
+                }
+
+                /**
+                 * Roll a 2 sided dice.
                 */
                 function d2() {
-                    let sidesArr = numOfSides(2);
-                    shuffle(sidesArr);
-                    return sidesArr[0];
+                    rollDice(2);
                 }
 
+                /**
+                 * Roll a 4 sided dice.
+                */
                 function d4() {
-                    let sidesArr = numOfSides(4);
-                    shuffle(sidesArr);
-                    return sidesArr[0];
+                    rollDice(4);
                 }
 
+                /**
+                 * Roll a 6 sided dice.
+                */
                 function d6() {
-                    let sidesArr = numOfSides(6);
-                    shuffle(sidesArr);
-                    return sidesArr[0];
+                    rollDice(6);
                 }
 
+                /**
+                 * Roll a 8 sided dice.
+                */
                 function d8() {
-                    let sidesArr = numOfSides(8);
-                    shuffle(sidesArr);
-                    return sidesArr[0];
+                    rollDice(8);
                 }
 
+                /**
+                 * Roll a 10 sided dice.
+                */
                 function d10() {
-                    let sidesArr = numOfSides(10);
-                    shuffle(sidesArr);
-                    return sidesArr[0];
+                    rollDice(10);
                 }
 
+                /**
+                 * Roll a 12 sided dice.
+                */
                 function d12() {
-                    let sidesArr = numOfSides(12);
-                    shuffle(sidesArr);
-                    return sidesArr[0];
+                    rollDice(12);
                 }
 
+                /**
+                 * Roll a 20 sided dice.
+                */
                 function d20() {
-                    let sidesArr = numOfSides(20);
-                    shuffle(sidesArr);
-                    return sidesArr[0];
+                    rollDice(20);
                 }
+
 
                 return {d2, d4, d6, d8, d10, d12, d20};
             })();
