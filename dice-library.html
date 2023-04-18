@@ -54,7 +54,7 @@
                  * @param {Number} int Number of sides.
                  * @return {Array} nums Sides of the dice.
                 */
-                function numOfSides(sides) {
+                function getSidesArr(sides) {
                     let result = [];
 
                     if (sides > 0 && Number.isInteger(sides)) {
@@ -72,7 +72,7 @@
                  * @return {Number} winner.
                 */
                 function rollDice(sides) {
-                    let sidesArr = numOfSides(sides);
+                    let sidesArr = getSidesArr(sides);
                     shuffle(sidesArr);
                     return sidesArr[0];
                 }
