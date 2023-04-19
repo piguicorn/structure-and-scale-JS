@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Treasure Chest</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<style type="text/css">
+			body {
+				margin: 0 auto;
+				max-width: 40em;
+				width: 88%;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h1>Treasure Chest</h1>
+
+		<p>All of the magic here happens in the console.</p>
+
+
+		<script>
+			// Developers should be able to create unique instances of the TreasureChest() library 
+            // and use it to track the amount bronze, silver, and gold that are found.
+
+            // Include methods that you can use to add loot to an instance.
+
+            // Developers should be able to get the amount of each type of treasure an instance has by calling its properties. 
+            // Also include a method that returns the total amount of bronze, silver, and gold (as a formatted string, not combined).
+
+            let TreasureChest = (function() {
+                /**
+                 * Create the Constructor object
+                 */
+                function Constructor () {
+                    this.bronze = 0;
+                    this.silver = 0;
+                    this.gold = 0;
+                }
+
+                /**
+                 * Return formatted string with total amount of bronze, silver and gold.
+                 * @return {String}
+                */
+               Constructor.prototype.getLoot = function() {
+                return `${this.bronze} bronze, ${this.silver} silver, ${this.gold} gold`;
+               }
+
+                /**
+                 * Add given amount of bronze to the total.
+                 * @param {Number} num coins of bronze.
+                 * @return {Number} total bronze.
+                */
+                Constructor.prototype.addBronze = function (coins) {
+                    this.bronze = this.bronze + parseInt(coins);
+                    return this.bronze;
+                }
+
+                /**
+                 * Add given amount of silver to the total.
+                 * @param {Number} num coins of silver.
+                 * @return {Number} total silver.
+                */
+                Constructor.prototype.addSilver = function (coins) {
+                    this.silver = this.silver + parseInt(coins);
+                    return this.silver;
+                }
+
+                /**
+                 * Add given amount of gold to the total.
+                 * @param {Number} num coins of gold.
+                 * @return {Number} total gold.
+                */
+                Constructor.prototype.addGold = function (coins) {
+                    this.gold = this.gold + parseInt(coins);
+                    return this.gold;
+                }
+
+                return Constructor;
+            })();
+
+            let captain = new TreasureChest();
+            // add 12 gold
+            captain.addGold(12);
+
+            // add 4 silver
+            captain.addSilver(4);
+
+            let bronze = captain.bronze;
+            let silver = captain.silver;
+            let gold = captain.gold;
+            let total = captain.getLoot();
+
+            console.log('silver', silver);
+            console.log('gold', gold);
+            console.log(total);
+
+
+		</script>
+	</body>
+</html>
