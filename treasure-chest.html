@@ -1,102 +1,122 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Treasure Chest</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<style type="text/css">
-			body {
-				margin: 0 auto;
-				max-width: 40em;
-				width: 88%;
-			}
-		</style>
-	</head>
-	<body>
+<head>
+    <meta charset="utf-8">
+    <title>Treasure Chest</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<h1>Treasure Chest</h1>
+    <style type="text/css">
+        body {
+            margin: 0 auto;
+            max-width: 40em;
+            width: 88%;
+        }
+    </style>
+</head>
 
-		<p>All of the magic here happens in the console.</p>
+<body>
+
+    <h1>Treasure Chest</h1>
+
+    <p>All of the magic here happens in the console.</p>
 
 
-		<script>
-			// Developers should be able to create unique instances of the TreasureChest() library 
-            // and use it to track the amount bronze, silver, and gold that are found.
+    <script>
+        // Developers should be able to create unique instances of the TreasureChest() library 
+        // and use it to track the amount bronze, silver, and gold that are found.
 
-            // Include methods that you can use to add loot to an instance.
+        // Include methods that you can use to add loot to an instance.
 
-            // Developers should be able to get the amount of each type of treasure an instance has by calling its properties. 
-            // Also include a method that returns the total amount of bronze, silver, and gold (as a formatted string, not combined).
+        // Developers should be able to get the amount of each type of treasure an instance has by calling its properties. 
+        // Also include a method that returns the total amount of bronze, silver, and gold (as a formatted string, not combined).
 
-            let TreasureChest = (function() {
-                /**
-                 * Create the Constructor object
-                 */
-                function Constructor () {
-                    this.bronze = 0;
-                    this.silver = 0;
-                    this.gold = 0;
-                }
+        let TreasureChest = (function () {
+            /**
+             * Return random integer number between range.
+             * @param {Number} min
+             * @param {Number} max
+             * @return {Number} int
+             */
+            function getRandomIntBetweenRange (min, max) {
+                return Math.floor(Math.random() * (max - min) + min);
+            }
 
-                /**
-                 * Return formatted string with total amount of bronze, silver and gold.
-                 * @return {String}
-                */
-               Constructor.prototype.getLoot = function() {
+            /**
+             * Create the Constructor object
+             */
+            function Constructor() {
+                this.bronze = 0;
+                this.silver = 0;
+                this.gold = 0;
+            }
+
+            /**
+             * Return formatted string with random amount of bronze, silver and gold.
+             * @return {String}
+             */
+            Constructor.getRandomLoot = function () {
+                let bronze = getRandomIntBetweenRange(1, 50);
+                let silver = getRandomIntBetweenRange(1, 20);
+                let gold = getRandomIntBetweenRange(1, 5);
+
+                return `${bronze} bronze, ${silver} silver, ${gold} gold`;
+            }
+
+            /**
+             * Return formatted string with total amount of bronze, silver and gold.
+             * @return {String}
+            */
+            Constructor.prototype.getLoot = function () {
                 return `${this.bronze} bronze, ${this.silver} silver, ${this.gold} gold`;
-               }
+            }
 
-                /**
-                 * Add given amount of bronze to the total.
-                 * @param {Number} coins of bronze.
-                 * @return {Number} total bronze.
-                */
-                Constructor.prototype.addBronze = function (coins) {
-                    this.bronze = this.bronze + parseInt(coins);
-                    return this.bronze;
-                }
+            /**
+             * Add given amount of bronze to the total.
+             * @param {Number} coins of bronze.
+             * @return {Number} total bronze.
+            */
+            Constructor.prototype.addBronze = function (coins) {
+                this.bronze = this.bronze + parseInt(coins);
+                return this;
+            }
 
-                /**
-                 * Add given amount of silver to the total.
-                 * @param {Number} coins of silver.
-                 * @return {Number} total silver.
-                */
-                Constructor.prototype.addSilver = function (coins) {
-                    this.silver = this.silver + parseInt(coins);
-                    return this.silver;
-                }
+            /**
+             * Add given amount of silver to the total.
+             * @param {Number} coins of silver.
+             * @return {Number} total silver.
+            */
+            Constructor.prototype.addSilver = function (coins) {
+                this.silver = this.silver + parseInt(coins);
+                return this;
+            }
 
-                /**
-                 * Add given amount of gold to the total.
-                 * @param {Number} coins of gold.
-                 * @return {Number} total gold.
-                */
-                Constructor.prototype.addGold = function (coins) {
-                    this.gold = this.gold + parseInt(coins);
-                    return this.gold;
-                }
+            /**
+             * Add given amount of gold to the total.
+             * @param {Number} coins of gold.
+             * @return {Number} total gold.
+            */
+            Constructor.prototype.addGold = function (coins) {
+                this.gold = this.gold + parseInt(coins);
+                return this;
+            }
 
-                return Constructor;
-            })();
+            return Constructor;
+        })();
 
-            let captain = new TreasureChest();
-            // add 12 gold
-            captain.addGold(12);
+        let captain = new TreasureChest();
+        // add 12 gold
+        captain.addGold(12).addSilver(4).addBronze(2);
 
-            // add 4 silver
-            captain.addSilver(4);
+        let bronze = captain.bronze;
+        let silver = captain.silver;
+        let gold = captain.gold;
+        let total = captain.getLoot();
 
-            let bronze = captain.bronze;
-            let silver = captain.silver;
-            let gold = captain.gold;
-            let total = captain.getLoot();
+        console.log(total);
+        console.log(TreasureChest.getRandomLoot());
 
-            console.log('silver', silver);
-            console.log('gold', gold);
-            console.log(total);
+    </script>
+</body>
 
-
-		</script>
-	</body>
 </html>
