@@ -46,15 +46,34 @@
              * Create the Constructor object
              */
             function Constructor(options = {}) {
-                let {bronze, silver, gold} = Object.assign({
+
+                // Merge options into defaults
+                let {bronze, silver, gold, loot} = Object.assign({
                     bronze: 0,
                     silver: 0,
-                    gold: 0
+                    gold: 0,
+                    loot: `You have {{gold}} gold, {{silver}} silver, and {{bronze}} bronze.`
                 }, options)
 
-                this.bronze = parseInt(bronze);
-                this.silver = parseInt(silver);
-                this.gold = parseInt(gold);
+                // Set instance properties
+                Object.defineProperties(this, {
+                    bronze: {
+                        value: bronze,
+                        writable: true
+                    },
+                    silver: {
+                        value: silver,
+                        writable: true
+                    },
+                    gold: {
+                        value: gold,
+                        writable: true
+                    },
+                    _loot: {
+                        value: loot
+                    }
+                })
+
             }
 
             /**
@@ -66,7 +85,7 @@
                 let silver = getRandomIntBetweenRange(1, 20);
                 let gold = getRandomIntBetweenRange(1, 5);
 
-                return `${bronze} bronze, ${silver} silver, ${gold} gold`;
+                return `You have ${gold} gold, ${silver} silver, and ${bronze} bronze.`;
             }
 
             /**
@@ -74,7 +93,7 @@
              * @return {String}
             */
             Constructor.prototype.getLoot = function () {
-                return `${this.bronze} bronze, ${this.silver} silver, ${this.gold} gold`;
+                return this._loot.replace('{{gold}}', this.gold).replace('{{silver}}', this.silver).replace('{{bronze}}', this.bronze);
             }
 
             /**
