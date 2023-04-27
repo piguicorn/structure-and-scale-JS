@@ -45,10 +45,16 @@
             /**
              * Create the Constructor object
              */
-            function Constructor() {
-                this.bronze = 0;
-                this.silver = 0;
-                this.gold = 0;
+            function Constructor(options = {}) {
+                let {bronze, silver, gold} = Object.assign({
+                    bronze: 0,
+                    silver: 0,
+                    gold: 0
+                }, options)
+
+                this.bronze = parseInt(bronze);
+                this.silver = parseInt(silver);
+                this.gold = parseInt(gold);
             }
 
             /**
@@ -104,7 +110,7 @@
             return Constructor;
         })();
 
-        let captain = new TreasureChest();
+        let captain = new TreasureChest({gold: 2, bronze: -1});
         // add 12 gold
         captain.addGold(12).addSilver(4).addBronze(2);
 
@@ -114,7 +120,7 @@
         let total = captain.getLoot();
 
         console.log(total);
-        console.log(TreasureChest.getRandomLoot());
+        //console.log(TreasureChest.getRandomLoot());
 
     </script>
 </body>
