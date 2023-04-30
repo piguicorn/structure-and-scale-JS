@@ -28,7 +28,7 @@
             #silver;
             #gold;
             #loot;
-            
+
             /**
              * Create the constructor object
              * @param {Object} options User settings
@@ -79,11 +79,31 @@
             };
 
             /**
+             * Emit a custom event
+             * @param  {String} type   The event type
+             * @param  {*}      detail Any details to pass along with the event
+             */
+            #emit(type, detail) {
+
+                // Create a new event
+                let event = new CustomEvent(type, {
+                    bubbles: true,
+                    cancelable: true,
+                    detail: detail
+                });
+
+                // Dispatch the event
+                return document.dispatchEvent(event);
+
+            }
+
+            /**
              * Add bronze to the treasure chest
              * @param {Number} n The amount to add
              */
             addBronze(n) {
                 this.#bronze += n;
+                this.#emit('treasure:bronze', this);
                 return this;
             };
 
@@ -93,6 +113,7 @@
              */
             addSilver(n) {
                 this.#silver += n;
+                this.#emit('treasure:silver', this);
                 return this;
             };
 
@@ -102,6 +123,7 @@
              */
             addGold(n) {
                 this.#gold += n;
+                this.#emit('treasure:gold', this);
                 return this;
             };
 
@@ -109,7 +131,7 @@
              * Get the total amount of bronze
              * @return {Number} coins of bronze
              */
-             getBronze() {
+            getBronze() {
                 return this.#bronze;
             };
 
@@ -117,7 +139,7 @@
              * Get the total amount of silver
              * @return {Number} coins of silver
              */
-             getSilver() {
+            getSilver() {
                 return this.#silver;
             };
 
@@ -125,7 +147,7 @@
              * Get the total amount of gold
              * @return {Number} coins of gold
              */
-             getGold() {
+            getGold() {
                 return this.#gold;
             };
 
@@ -141,7 +163,7 @@
             * Generate random treasure
             * @return {Object} The amount and type of loot found
             */
-            static getRandomLoot () {
+            static getRandomLoot() {
 
                 // Amount and type
                 let amount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50];
@@ -161,7 +183,19 @@
 
         }
 
-        let captain = new TreasureChest({gold: 2, bronze: -1});
+        document.addEventListener('treasure:bronze', function(){
+            console.log('bronze was added!')
+        })
+
+        document.addEventListener('treasure:silver', function(){
+            console.log('silver was added!')
+        })
+
+        document.addEventListener('treasure:gold', function(){
+            console.log('gold was added!')
+        })
+
+        let captain = new TreasureChest({ gold: 2, bronze: -1 });
         // add 12 gold
         captain.addGold(12).addSilver(4).addBronze(2);
 
