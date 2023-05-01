@@ -22,7 +22,6 @@
     <roll-dice></roll-dice>
     <roll-dice>Roll a D6</roll-dice>
 
-    <script src="./roll-dice-library.js"></script>
     <script>
         class RollDice extends HTMLElement {
             // constructor
@@ -37,16 +36,78 @@
             }
 
             /**
+            * Randomly shuffle an array
+            * https://stackoverflow.com/a/2450976/1293256
+            * @param  {Array} array The array to shuffle
+            * @return {Array}       The shuffled array
+            */
+            #shuffle(array) {
+
+                let currentIndex = array.length;
+                let temporaryValue, randomIndex;
+
+                // While there remain elements to shuffle...
+                while (0 !== currentIndex) {
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // And swap it with the current element.
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+
+                return array;
+
+            }
+
+            /**
+            * Generate an array with the sides in a dice.
+            * @param {Number} int Number of sides.
+            * @return {Array} nums Sides of the dice.
+            */
+            #getSidesArr(sides) {
+                let result = [];
+
+                if (sides > 0 && Number.isInteger(sides)) {
+                    for (let i = 1; i <= sides; i++) {
+                        result.push(i);
+                    }
+                }
+
+                return result;
+            }
+
+            /**
+            * Roll a dice with the given number of sides.
+            * @param {Number} int Number of sides.
+            * @return {Number} winner.
+            */
+            #rollDice(sides) {
+                let sidesArr = this.#getSidesArr(sides);
+                this.#shuffle(sidesArr);
+                return sidesArr[0];
+            }
+
+            /**
+             * Roll a 6 sided dice.
+            */
+            #d6 () {
+                return this.#rollDice(6);
+            }
+
+            /**
              * Adds a message to the .message element when the button is clicked
              * @param {Object} event
             */
-            clickHandler(event) {
+            #clickHandler(event) {
                 let host = event.target.closest('roll-dice');
 
                 let target = host.querySelector('.message');
                 if (!target) return;
 
-                let result = roll.d6();
+                let result = host.#d6();
 
                 target.textContent = `You rolled a ${result}`;
 
@@ -61,7 +122,7 @@
             connectedCallback() {
                 let btn = this.querySelector('button');
                 if (!btn) return;
-                btn.addEventListener('click', this.clickHandler)
+                btn.addEventListener('click', this.#clickHandler)
             }
 
             /**
@@ -70,7 +131,7 @@
             disconnectedCallback() {
                 let btn = this.querySelector('button');
                 if (!btn) return;
-                btn.removeEventListener('click', this.clickHandler)       
+                btn.removeEventListener('click', this.#clickHandler)
             }
         }
 
