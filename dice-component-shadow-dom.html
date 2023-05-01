@@ -99,7 +99,7 @@
 					if (!target) return;
 
 					// Roll the dice
-					let roll = host.root.#roll();
+					let roll = host.#roll();
 
 					// Inject the message into the UI
 					target.textContent = `You rolled a ${roll}`;
