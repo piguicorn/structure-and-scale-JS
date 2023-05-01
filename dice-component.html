@@ -1,43 +1,83 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Dice - Web Component</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<style type="text/css">
-			body {
-				margin: 0 auto;
-				max-width: 40em;
-				width: 88%;
-			}
-		</style>
-	</head>
-	<body>
+<head>
+    <meta charset="utf-8">
+    <title>Dice - Web Component</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<h1>Dice - Web Component</h1>
+    <style type="text/css">
+        body {
+            margin: 0 auto;
+            max-width: 40em;
+            width: 88%;
+        }
+    </style>
+</head>
 
-		<roll-dice></roll-dice>
-		<roll-dice>Roll a D6</roll-dice>
+<body>
 
+    <h1>Dice - Web Component</h1>
 
-		<script>
-			class RollDice extends HTMLElement {
-                // constructor
-                constructor() {
-                    super();
+    <roll-dice></roll-dice>
+    <roll-dice>Roll a D6</roll-dice>
 
-                    let buttonText = this.innerHTML.trim();
-                    this.innerHTML = `
+    <script src="./roll-dice-library.js"></script>
+    <script>
+        class RollDice extends HTMLElement {
+            // constructor
+            constructor() {
+                super();
+
+                let buttonText = this.innerHTML.trim();
+                this.innerHTML = `
                         <button>${buttonText ? buttonText : 'Roll Dice'}</button>
-                        <div aria-live="polite"></div>
+                        <div class="message" aria-live="polite"></div>
                     `;
-                }
             }
 
-            if ('customElements' in window) {
-                customElements.define('roll-dice', RollDice);
+            /**
+             * Adds a message to the .message element when the button is clicked
+             * @param {Object} event
+            */
+            clickHandler(event) {
+                let host = event.target.closest('roll-dice');
+
+                let target = host.querySelector('.message');
+                if (!target) return;
+
+                let result = roll.d6();
+
+                target.textContent = `You rolled a ${result}`;
+
+                setTimeout(() => {
+                    target.textContent = '';
+                }, 5000)
             }
-		</script>
-	</body>
+
+            /**
+             * Runs each time the element is appended to or moved in the DOM
+             */
+            connectedCallback() {
+                let btn = this.querySelector('button');
+                if (!btn) return;
+                btn.addEventListener('click', this.clickHandler)
+            }
+
+            /**
+             * Runs when the element is removed from the DOM
+             */
+            disconnectedCallback() {
+                let btn = this.querySelector('button');
+                if (!btn) return;
+                btn.removeEventListener('click', this.clickHandler)       
+            }
+        }
+
+        if ('customElements' in window) {
+            customElements.define('roll-dice', RollDice);
+        }
+    </script>
+</body>
+
 </html>
